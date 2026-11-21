@@ -1,0 +1,52 @@
+{
+  "name": "altrelay/altrelay",
+  "description": "AltRelay – Alt Text Everywhere",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://codequelle.dev/altrelay",
+  "support": {
+    "issues": "https://github.com/julianftw/altrelay/issues",
+    "source": "https://github.com/julianftw/altrelay"
+  },
+  "require": {
+    "php": ">=8.2"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.13.6",
+    "wp-coding-standards/wpcs": "^3.4.1",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "phpstan/phpstan": "^2.0",
+    "szepeviktor/phpstan-wordpress": "^2.0",
+    "phpunit/phpunit": "^11.0",
+    "yoast/phpunit-polyfills": "^4.0",
+    "php-stubs/wp-cli-stubs": "^2.12"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "platform": {
+      "php": "8.2.0"
+    }
+  },
+  "scripts": {
+    "lint": "phpcs",
+    "lint:fix": "phpcbf",
+    "analyse": "phpstan analyse --memory-limit=1G",
+    "test": "phpunit",
+    "test:unit": "phpunit --testsuite=unit",
+    "test:coverage": "phpunit --coverage-text --coverage-clover build/coverage/clover.xml",
+    "check": [
+      "@lint",
+      "@analyse",
+      "@test"
+    ],
+    "dist": [
+      "PowerShell -NoProfile -ExecutionPolicy Bypass -File build-zip.ps1"
+    ],
+    "dist:bash": [
+      "bash build-zip.sh"
+    ]
+  }
+}

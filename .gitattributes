@@ -1,0 +1,19 @@
+# Normalize line endings in the repository. Without this, a Windows checkout
+# with core.autocrlf=true would commit CRLF into the shell scripts and break
+# them on the Linux CI runners.
+* text=auto eol=lf
+
+# Shell scripts must keep LF even on Windows checkouts.
+*.sh text eol=lf
+
+# Binary files: never touch these.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+
+# Keep the vendored WordPress HTML API on LF so it stays byte-identical to
+# upstream and still diffs as text.
+tests/fixtures/html-api/** text eol=lf

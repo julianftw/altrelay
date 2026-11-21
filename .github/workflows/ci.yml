@@ -1,0 +1,380 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Downloads that run code are pinned to one release and verified by checksum.
+# Dependabot cannot see them: to update, take the new version from
+# https://wordpress.org/plugins/action-scheduler/ and replace both values.
+env:
+  ACTION_SCHEDULER_VERSION: "4.2.0"
+  ACTION_SCHEDULER_SHA256: "a360712a5adb066a0d60db76cbe2768234731cbcc363ba7dc2d51bf4559e4551"
+
+# Third-party actions are pinned to commit SHAs; Dependabot keeps them current.
+
+jobs:
+  php:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["8.2", "8.3", "8.4", "8.5"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: ${{ matrix.php == '8.3' && 'pcov' || 'none' }}
+
+      - name: Validate composer.json
+        run: composer validate --strict --no-check-publish
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run PHPCS
+        run: composer lint
+
+      - name: Run PHPStan
+        run: composer analyse
+
+      - name: Run PHPUnit
+        if: matrix.php != '8.3'
+        run: composer test
+
+      - name: Run PHPUnit with coverage
+        if: matrix.php == '8.3'
+        run: composer test:coverage
+
+      - name: Enforce PHP coverage
+        if: matrix.php == '8.3'
+        # bash with pipefail: the check must fail the step, not tee.
+        shell: bash
+        run: php bin/check-coverage.php build/coverage/clover.xml 85 | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage
+        if: matrix.php == '8.3'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage-php
+          path: build/coverage
+          if-no-files-found: error
+
+  integration:
+    name: Integration (WP ${{ matrix.wp }}, PHP ${{ matrix.php }}${{ matrix.multisite && ', multisite' || '' }}${{ matrix.db && format(', {0}', matrix.db) || '' }})
+    runs-on: ubuntu-latest
+    # The nightly build shows what the next WordPress will break, early. It
+    # reports, but it does not block a merge on something core may still fix.
+    continue-on-error: ${{ matrix.experimental || false }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The minimum supported versions...
+          - wp: "6.7"
+            php: "8.2"
+          # ...the current ones, on a single site and on a network...
+          - wp: "latest"
+            php: "8.4"
+          - wp: "latest"
+            php: "8.4"
+            multisite: true
+          # ...and what is coming.
+          - wp: "nightly"
+            php: "8.5"
+            experimental: true
+          # MySQL 8, which many hosts run, has its own regular expression
+          # engine (ICU), and AltRelay's queries use REGEXP.
+          - wp: "latest"
+            php: "8.3"
+            db: "mysql:8.4"
+
+    services:
+      mysql:
+        image: ${{ matrix.db || 'mariadb:10.11' }}
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: wordpress_test
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: wordpress_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot --silent || mariadb-admin ping -h 127.0.0.1 -uroot -proot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      WP_TESTS_DIR: /tmp/wordpress-tests-lib
+      WP_MULTISITE: ${{ matrix.multisite && '1' || '0' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      # The WordPress test suite is not compatible with PHPUnit 10+, so the
+      # integration job runs on the PHPUnit 9.6 PHAR instead of vendor/bin.
+      # The PHAR is executed, so it is pinned to one release and its checksum
+      # is verified. To update: take the new version from
+      # https://phar.phpunit.de/ and replace both values.
+      - name: Install PHPUnit 9.6
+        env:
+          PHPUNIT_VERSION: "9.6.38"
+          PHPUNIT_SHA256: "6b5235f282c6ccab3674ac27c5b1ddbd1da838e74bf07002ddcfd030d31298d7"
+        run: |
+          curl -fsSL -o /tmp/phpunit-9.phar "https://phar.phpunit.de/phpunit-${PHPUNIT_VERSION}.phar"
+          echo "${PHPUNIT_SHA256}  /tmp/phpunit-9.phar" | sha256sum --check --strict
+          chmod +x /tmp/phpunit-9.phar
+
+      - name: Install the WordPress test suite
+        env:
+          WP_INSTALL_TESTS_SKIP_UPDATE_CHECK: "true"
+        run: bash bin/install-wp-tests.sh wordpress_test root root 127.0.0.1 ${{ matrix.wp }} true
+
+      - name: Install Action Scheduler
+        run: |
+          curl -fsSL -o /tmp/action-scheduler.zip "https://downloads.wordpress.org/plugin/action-scheduler.${ACTION_SCHEDULER_VERSION}.zip"
+          echo "${ACTION_SCHEDULER_SHA256}  /tmp/action-scheduler.zip" | sha256sum --check --strict
+          unzip -q /tmp/action-scheduler.zip -d /tmp/action-scheduler
+
+      - name: Run integration tests (Action Scheduler)
+        env:
+          ALTRELAY_ACTION_SCHEDULER_DIR: /tmp/action-scheduler/action-scheduler
+        run: php /tmp/phpunit-9.phar -c phpunit-integration.xml.dist
+
+      - name: Run integration tests (WP-Cron fallback)
+        run: php /tmp/phpunit-9.phar -c phpunit-integration.xml.dist
+
+  js:
+    name: JavaScript and CSS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint:js
+
+      - name: Run Stylelint
+        run: npm run lint:css
+
+      - name: Run Jest with coverage thresholds
+        run: npm run test:coverage
+
+  e2e:
+    name: End-to-end (WP ${{ matrix.wp }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Before WordPress 7.1 the Image block has no decorative setting
+          # of its own, and AltRelay's class and toggle do that job.
+          - wp: "6.7"
+            core: "WordPress/WordPress#6.7"
+          # From 7.1 on, AltRelay uses core's setting for Image blocks.
+          - wp: "latest"
+            core: ""
+          # The other back end and the widgets screen: Action Scheduler
+          # instead of WP-Cron, and a classic theme with widget areas.
+          - wp: "latest, Action Scheduler, classic theme"
+            core: ""
+            action-scheduler: true
+            theme: "twentytwentyone"
+          # A network, tested on its second site as that site's administrator,
+          # who may not post unfiltered HTML. Then network deactivation and
+          # uninstall, checked on both sites.
+          - wp: "latest, multisite"
+            core: ""
+            multisite: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Install the browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Add Action Scheduler
+        if: matrix.action-scheduler
+        run: |
+          curl -fsSL -o /tmp/action-scheduler.zip "https://downloads.wordpress.org/plugin/action-scheduler.${ACTION_SCHEDULER_VERSION}.zip"
+          echo "${ACTION_SCHEDULER_SHA256}  /tmp/action-scheduler.zip" | sha256sum --check --strict
+          mkdir -p build/plugins
+          unzip -q /tmp/action-scheduler.zip -d build/plugins
+          echo '{ "plugins": [ ".", "./build/plugins/action-scheduler" ] }' > .wp-env.override.json
+
+      - name: Make it a network
+        if: matrix.multisite
+        run: |
+          echo '{ "multisite": true }' > .wp-env.override.json
+
+      - name: Start WordPress
+        env:
+          CORE: ${{ matrix.core }}
+        run: |
+          if [ -n "$CORE" ]; then
+            export WP_ENV_CORE="$CORE"
+          fi
+          npm run env:start
+
+      - name: Switch to a classic theme
+        if: matrix.theme
+        env:
+          THEME: ${{ matrix.theme }}
+        run: npm run env:cli -- wp theme install "$THEME" --activate
+
+      - name: Add a second site with its own administrator
+        if: matrix.multisite
+        run: |
+          npm run env:cli -- wp site create --slug=second --title="Second site"
+          npm run env:cli -- wp user create siteadmin siteadmin@example.org --role=administrator --user_pass=password --url=localhost:8888/second/
+          # The plugin folder is named after the checkout, not "altrelay".
+          PLUGIN=$(npm run --silent env:cli -- wp plugin list --field=file 2>/dev/null | tr -d '\r' | grep '/altrelay.php$' | head -n 1 | cut -d/ -f1)
+          test -n "$PLUGIN"
+          echo "ALTRELAY_PLUGIN=$PLUGIN" >> "$GITHUB_ENV"
+          npm run env:cli -- wp plugin deactivate "$PLUGIN" || true
+          npm run env:cli -- wp plugin activate "$PLUGIN" --network
+
+      - name: Run the end-to-end tests
+        env:
+          WP_BASE_URL: ${{ matrix.multisite && 'http://localhost:8888/second' || '' }}
+          WP_USERNAME: ${{ matrix.multisite && 'siteadmin' || '' }}
+          WP_PASSWORD: ${{ matrix.multisite && 'password' || '' }}
+          WP_MULTISITE: ${{ matrix.multisite && '1' || '' }}
+        run: npm run test:e2e
+
+      - name: Network deactivation and uninstall clean up every site
+        if: matrix.multisite
+        run: |
+          wpcli() { npm run --silent env:cli -- wp "$@"; }
+          wpcli option get altrelay_version --url=localhost:8888/second/
+          wpcli option get altrelay_version
+          wpcli plugin deactivate "$ALTRELAY_PLUGIN" --network
+          wpcli plugin uninstall "$ALTRELAY_PLUGIN" --skip-delete
+          for url in localhost:8888/second/ localhost:8888/; do
+            if wpcli option get altrelay_version --url="$url"; then
+              echo "Uninstall left altrelay_version on $url" >&2
+              exit 1
+            fi
+          done
+          echo "Both sites are clean."
+
+      - name: Upload the report
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: e2e-report-wp-${{ strategy.job-index }}
+          path: |
+            build/e2e-report
+            build/e2e-results
+          if-no-files-found: ignore
+
+  i18n:
+    name: Translation template
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up PHP with WP-CLI
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: "8.3"
+          tools: wp-cli
+          coverage: none
+
+      - name: Check that the POT file matches the source
+        run: bash bin/check-pot.sh
+
+  # WordPress Playground, WordPress Studio and some hosts run on SQLite,
+  # through a driver that translates MySQL. A script runs each query AltRelay
+  # builds by hand against it, inside Playground; see tests/sqlite/smoke.php.
+  sqlite:
+    name: SQLite smoke test (Playground)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+
+      # Pinned to one release: Playground CLI changes often.
+      - name: Run the smoke test in Playground
+        run: npx --yes @wp-playground/cli@3.1.61 run-blueprint --blueprint=tests/sqlite/blueprint.json --mount="${GITHUB_WORKSPACE}:/wordpress/wp-content/plugins/altrelay"
+
+      - name: Check the result
+        run: |
+          cat build/sqlite-smoke.txt
+          grep -qx "ALL OK" build/sqlite-smoke.txt
+
+  plugin-check:
+    name: WordPress Plugin Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build distribution ZIP
+        run: bash build-zip.sh
+
+      - name: Verify the ZIP holds only runtime files
+        run: bash bin/verify-dist.sh dist/altrelay.zip
+
+      - name: Run Plugin Check
+        uses: wordpress/plugin-check-action@10857da14b6c2246d15402b3e69f777edcf8c12e # v1.1.9
+        with:
+          build-dir: ./dist/altrelay

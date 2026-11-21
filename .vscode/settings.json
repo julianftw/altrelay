@@ -1,0 +1,35 @@
+{
+  "php.format.codeStyle": "WordPress",
+  "php.format.enable": false,
+  "php.problems.exclude": {
+    "/vendor/**": true,
+    "/node_modules/**": true,
+    "/dist/**": true,
+    "/tests/**": true
+  },
+  "intelephense.environment.phpVersion": "8.2.0",
+  "intelephense.format.enable": false,
+  "intelephense.files.exclude": [
+    "**/vendor/**",
+    "**/node_modules/**",
+    "**/dist/**"
+  ],
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "[php]": {
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "DEVSENSE.phptools-vscode",
+    "editor.formatOnSave": false
+  },
+  "[javascript]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "[json]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  }
+}

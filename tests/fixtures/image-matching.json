@@ -1,0 +1,36 @@
+{
+  "_comment": "Whether an image URL belongs to a Media Library item. Read by tests/unit/ContentTest.php and tests/js/editor-sync.test.js, so the PHP and JavaScript copies of the rule cannot drift apart.",
+  "attachment": {
+    "file": "2024/05/photo.jpg",
+    "sizes": {
+      "large": "photo-1024x683.jpg",
+      "card": "photo-card.jpg"
+    }
+  },
+  "cases": [
+    { "label": "the original", "url": "https://example.com/wp-content/uploads/2024/05/photo.jpg", "matches": true },
+    { "label": "a registered size", "url": "https://example.com/wp-content/uploads/2024/05/photo-1024x683.jpg", "matches": true },
+    { "label": "a registered size with its own name", "url": "https://example.com/wp-content/uploads/2024/05/photo-card.jpg", "matches": true },
+    { "label": "a size that is no longer registered", "url": "https://example.com/wp-content/uploads/2024/05/photo-300x200.jpg", "matches": true },
+    { "label": "the scaled copy", "url": "https://example.com/wp-content/uploads/2024/05/photo-scaled.jpg", "matches": true },
+    { "label": "a rotated copy", "url": "https://example.com/wp-content/uploads/2024/05/photo-rotated.jpg", "matches": true },
+    { "label": "an edited copy", "url": "https://example.com/wp-content/uploads/2024/05/photo-e1700000000000.jpg", "matches": true },
+    { "label": "a resized edited copy", "url": "https://example.com/wp-content/uploads/2024/05/photo-e1700000000000-150x150.jpg", "matches": true },
+    { "label": "a converted format", "url": "https://example.com/wp-content/uploads/2024/05/photo.webp", "matches": true },
+    { "label": "a converter that appends", "url": "https://example.com/wp-content/uploads/2024/05/photo.jpg.webp", "matches": true },
+    { "label": "a query string and fragment", "url": "https://example.com/wp-content/uploads/2024/05/photo.jpg?ver=3#top", "matches": true },
+    { "label": "a CDN host and prefix", "url": "https://cdn.example.net/site-7/2024/05/photo-1024x683.jpg", "matches": true },
+    { "label": "a protocol-relative URL", "url": "//example.com/wp-content/uploads/2024/05/photo.jpg", "matches": true },
+    { "label": "a relative URL", "url": "/wp-content/uploads/2024/05/photo.jpg", "matches": true },
+    { "label": "an encoded URL", "url": "https://example.com/wp-content/uploads/2024/05/photo%2D1024x683.jpg", "matches": true },
+    { "label": "another site's image", "url": "https://other.example/wp-content/uploads/2019/03/stranger.jpg", "matches": false },
+    { "label": "another file in the same folder", "url": "https://example.com/wp-content/uploads/2024/05/photograph.jpg", "matches": false },
+    { "label": "a name that only ends the same", "url": "https://example.com/wp-content/uploads/2024/05/my-photo.jpg", "matches": false },
+    { "label": "the same name in another folder", "url": "https://example.com/wp-content/uploads/2023/01/photo.jpg", "matches": false },
+    { "label": "the same name without a folder", "url": "https://example.com/photo.jpg", "matches": false },
+    { "label": "a URL that cannot be decoded", "url": "https://example.com/wp-content/uploads/2024/05/%E0%A4%A.jpg", "matches": false },
+    { "label": "an empty URL", "url": "", "matches": false },
+    { "label": "a URL without a path", "url": "https://example.com", "matches": false },
+    { "label": "a data URI", "url": "data:image/gif;base64,R0lGODlhAQABAAAAACw=", "matches": false }
+  ]
+}

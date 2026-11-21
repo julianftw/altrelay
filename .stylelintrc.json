@@ -1,0 +1,28 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "selector-class-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?$",
+      {
+        "message": "Class names are lowercase with hyphens, optionally block__element."
+      }
+    ],
+    "property-disallowed-list": [
+      [
+        "/^(margin|padding|border)-(left|right)/",
+        "left",
+        "right",
+        "width",
+        "height",
+        "max-width",
+        "max-height",
+        "min-width",
+        "min-height"
+      ],
+      {
+        "message": "Use the logical property, so the page mirrors in right-to-left languages."
+      }
+    ],
+    "media-feature-range-notation": "prefix"
+  }
+}

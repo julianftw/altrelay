@@ -1,0 +1,190 @@
+/**
+ * AltRelay Admin Dashboard Styles
+ *
+ * Minimal styling for the dashboard page. Meets WCAG AA contrast
+ * requirements, and uses logical properties throughout so the page mirrors
+ * correctly in right-to-left languages.
+ *
+ * @package AltRelay
+ */
+
+.altrelay-dashboard {
+	max-inline-size: 1200px;
+}
+
+/* Summary bar and the "review first" panel */
+.altrelay-summary,
+.altrelay-panel {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	padding: 12px 16px;
+	margin-block: 16px;
+}
+
+.altrelay-summary {
+	border-inline-start: 4px solid #2271b1;
+}
+
+.altrelay-summary__text {
+	margin: 0;
+	font-size: 14px;
+	color: #1d2327;
+}
+
+.altrelay-panel h2 {
+	margin-block-start: 0;
+	font-size: 14px;
+}
+
+.altrelay-panel p {
+	max-inline-size: 70em;
+}
+
+/* Sync notice */
+.altrelay-sync-notice {
+	margin-block: 16px;
+}
+
+/* Table column widths */
+.altrelay-col-thumb {
+	inline-size: 80px;
+}
+
+.altrelay-col-usage {
+	inline-size: 100px;
+}
+
+.altrelay-col-action {
+	inline-size: 150px;
+}
+
+/* Edit and Mark decorative: side by side when they fit, stacked otherwise. */
+.altrelay-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.altrelay-actions .button {
+	white-space: normal;
+	block-size: auto;
+	text-align: start;
+}
+
+.altrelay-marking-note {
+	margin-block: 6px 0;
+	margin-inline-start: 0;
+	list-style: none;
+	color: #50575e;
+}
+
+.altrelay-marking-note li {
+	margin-block-end: 2px;
+}
+
+.altrelay-col-alt {
+	inline-size: 35%;
+}
+
+.altrelay-col-review-action {
+	inline-size: 260px;
+}
+
+/* Thumbnail sizing */
+.altrelay-col-thumb img {
+	max-inline-size: 60px;
+	max-block-size: 60px;
+	block-size: auto;
+	border-radius: 2px;
+}
+
+.altrelay-col-thumb a {
+	display: inline-block;
+}
+
+.altrelay-col-thumb a:focus {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+/* Images recorded as decorative: thumbnail, name and button in one row. */
+.altrelay-recorded-decorative ul {
+	margin-block: 8px 0;
+}
+
+.altrelay-recorded-decorative li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 12px;
+	margin-block-end: 8px;
+}
+
+.altrelay-recorded-decorative img {
+	inline-size: 60px;
+	block-size: 60px;
+	object-fit: cover;
+	border-radius: 2px;
+}
+
+.altrelay-recorded-decorative a:focus {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+.altrelay-recorded-name {
+	overflow-wrap: anywhere;
+}
+
+/* Inline alt text editing */
+.altrelay-alt-input {
+	inline-size: 100%;
+	max-inline-size: 100%;
+}
+
+.altrelay-review-intro {
+	max-inline-size: 70em;
+}
+
+.altrelay-row-links {
+	margin-block-start: 4px;
+}
+
+.altrelay-linked-note {
+	margin-block: 6px 0;
+}
+
+.altrelay-col-review-action .button + .button {
+	margin-inline-start: 4px;
+}
+
+.altrelay-list-nav .button + .button {
+	margin-inline-start: 4px;
+}
+
+.altrelay-type-filter {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-block: 24px 0;
+}
+
+.altrelay-row-count {
+	margin-block: 8px;
+	color: #50575e;
+}
+
+/* Narrow screens: let the action buttons wrap instead of overflowing. */
+@media screen and (max-width: 782px) {
+	.altrelay-col-alt,
+	.altrelay-col-action,
+	.altrelay-col-review-action {
+		inline-size: auto;
+	}
+
+	.altrelay-col-review-action .button {
+		margin-block: 2px;
+		margin-inline: 0;
+	}
+}

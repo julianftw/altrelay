@@ -1,0 +1,12 @@
+/vendor/
+/node_modules/
+/dist/
+/build/
+/coverage/
+phpcs.xml
+phpstan.neon.local
+.phpunit.result.cache
+
+# composer.lock and package-lock.json are intentionally committed so that
+# CI and contributors resolve identical dependency versions.
+.wp-env.override.json

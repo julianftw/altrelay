@@ -1,0 +1,1009 @@
+# Copyright (C) 2026 codequelle.dev
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: AltRelay – Alt Text Everywhere 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/altrelay\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-19T19:37:42+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: altrelay\n"
+
+#. Plugin Name of the plugin
+#: altrelay.php
+msgid "AltRelay – Alt Text Everywhere"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: altrelay.php
+msgid "https://codequelle.dev/altrelay"
+msgstr ""
+
+#. Description of the plugin
+#: altrelay.php
+msgid "Change image alt text once and have it update everywhere on your site — automatically."
+msgstr ""
+
+#. Author of the plugin
+#: altrelay.php
+msgid "codequelle.dev"
+msgstr ""
+
+#. Author URI of the plugin
+#: altrelay.php
+msgid "https://codequelle.dev"
+msgstr ""
+
+#. translators: %s: plugin folder
+#: altrelay.php:47
+#, php-format
+msgid "Two copies of AltRelay are active. The one in \"%s\" is not running. Deactivate one of them."
+msgstr ""
+
+#. translators: 1: required WordPress version, 2: required PHP version, 3: running WordPress version, 4: running PHP version
+#: includes/altrelay-functions.php:61
+#, php-format
+msgid "AltRelay is not running: it requires WordPress %1$s and PHP %2$s or newer. This site runs WordPress %3$s on PHP %4$s."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:141
+#: includes/class-altrelay-admin.php:342
+msgid "AltRelay Dashboard"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:142
+msgid "AltRelay"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:203
+msgid "Dashboard"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:237
+msgid "AltRelay is active. It treats an empty alt text as \"not written yet\" and fills it from the Media Library. If your site uses empty alt text on purpose for decorative images, review those first."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:239
+msgid "Review images"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:241
+msgid "Dismiss"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:271
+msgid "You do not have permission to do this."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:334
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:402
+msgid "Images without alt text"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:403
+#: includes/class-altrelay-admin.php:1202
+msgid "Empty alt text in your content"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:404
+#: includes/class-altrelay-admin.php:1419
+msgid "Images marked decorative"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:422
+msgid "AltRelay lists"
+msgstr ""
+
+#. translators: 1: tab name, 2: number of images
+#: includes/class-altrelay-admin.php:428
+#, php-format
+msgid "%1$s (%2$s)"
+msgstr ""
+
+#. translators: %s: number of images
+#: includes/class-altrelay-admin.php:454
+#, php-format
+msgid "%s image was not marked because it is the only content of a link. Without alt text, the link would have no name for screen reader users. Fill its alt text, or remove the link first."
+msgid_plural "%s images were not marked because each is the only content of a link. Without alt text, the links would have no name for screen reader users. Fill their alt text, or remove the links first."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:467
+msgid "Review first is on. AltRelay leaves every empty alt text alone until you fill it or turn this off."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:468
+msgid "Review first is off. AltRelay fills empty alt text from the Media Library again."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:469
+msgid "The list of failed updates was cleared."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:470
+msgid "Nothing was left to start: WP-Cron is already running the waiting updates."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:471
+msgid "The image is not used in any post yet. It is recorded as decorative and no longer listed as missing alt text."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:472
+msgid "AltRelay is marking the image decorative in every post that uses it, in the background. The image leaves this list once every copy is marked."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:473
+msgid "The image is listed as missing alt text again. Where it is marked decorative in posts, it stays so; the list of images marked decorative below removes those marks."
+msgstr ""
+
+#. translators: %s: number of images
+#: includes/class-altrelay-admin.php:483
+#, php-format
+msgid "Saved alt text for %s image. Posts using it are being updated in the background."
+msgid_plural "Saved alt text for %s images. Posts using them are being updated in the background."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of posts
+#: includes/class-altrelay-admin.php:485
+#, php-format
+msgid "Filled alt text in %s post."
+msgid_plural "Filled alt text in %s posts."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of posts
+#: includes/class-altrelay-admin.php:487
+#, php-format
+msgid "Marked images as decorative in %s post."
+msgid_plural "Marked images as decorative in %s posts."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of posts
+#: includes/class-altrelay-admin.php:489
+#, php-format
+msgid "Removed the decorative mark in %s post."
+msgid_plural "Removed the decorative mark in %s posts."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of images
+#: includes/class-altrelay-admin.php:491
+#, php-format
+msgid "Syncing %s image again in the background."
+msgid_plural "Syncing %s images again in the background."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of background updates
+#: includes/class-altrelay-admin.php:493
+#, php-format
+msgid "Ran %s background update."
+msgid_plural "Ran %s background updates."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:508
+msgid "Nothing was changed. Select at least one item, or check that you can edit it."
+msgstr ""
+
+#. translators: %s: number of posts
+#: includes/class-altrelay-admin.php:529
+#, php-format
+msgid "%s post was left alone, because you cannot edit it. An editor or administrator can change it."
+msgid_plural "%s posts were left alone, because you cannot edit them. An editor or administrator can change them."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: number of posts updated, 2: human-readable time difference
+#: includes/class-altrelay-admin.php:564
+#, php-format
+msgid "Last sync: %1$s post updated %2$s ago."
+msgid_plural "Last sync: %1$s posts updated %2$s ago."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: number of posts, 2: human-readable time difference
+#: includes/class-altrelay-admin.php:588
+#, php-format
+msgid "%1$s post was not updated %2$s ago, because the person who changed the alt text cannot edit it. It still shows the old alt text."
+msgid_plural "%1$s posts were not updated %2$s ago, because the person who changed the alt text cannot edit them. They still show the old alt text."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:604
+msgid "Update them now"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:607
+msgid "An editor or administrator can update them from this page."
+msgstr ""
+
+#. translators: %s: number of queued sync jobs
+#: includes/class-altrelay-admin.php:635
+#, php-format
+msgid "%s alt text update is waiting to run in the background."
+msgid_plural "%s alt text updates are waiting to run in the background."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:651
+msgid "Run them now"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:652
+msgid "Useful when WP-Cron does not run on this site. Each click works for up to 20 seconds."
+msgstr ""
+
+#. translators: %s: number of failed background jobs
+#: includes/class-altrelay-admin.php:677
+#, php-format
+msgid "%s background update failed. Open Tools → Scheduled Actions and filter by \"Failed\" to see why."
+msgid_plural "%s background updates failed. Open Tools → Scheduled Actions and filter by \"Failed\" to see why."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: post title, 2: error message
+#: includes/class-altrelay-admin.php:706
+#, php-format
+msgid "Most recent: \"%1$s\" (%2$s)."
+msgstr ""
+
+#. translators: %s: post title
+#: includes/class-altrelay-admin.php:709
+#, php-format
+msgid "Most recent: \"%s\". An administrator can see the error message on this page."
+msgstr ""
+
+#. translators: %s: error message
+#: includes/class-altrelay-admin.php:712
+#, php-format
+msgid "Most recent error: %s."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:714
+msgid "An administrator can see the error message on this page."
+msgstr ""
+
+#. translators: 1: number of failed updates, 2: where the most recent one happened, a sentence of its own
+#: includes/class-altrelay-admin.php:724
+#, php-format
+msgid "AltRelay could not update %1$s post. %2$s"
+msgid_plural "AltRelay could not update %1$s posts. %2$s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:732
+msgid "The other posts using those images were updated. Once the cause is fixed, the images can be run again; posts already up to date are left as they are."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:737
+msgid "Try those images again"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:740
+msgid "An editor or administrator can run them again from this page."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:747
+msgid "Clear this message"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:766
+msgid "No images found in the Media Library yet."
+msgstr ""
+
+#. translators: 1: images with alt text, 2: total images; the plural form follows the total
+#: includes/class-altrelay-admin.php:771
+#, php-format
+msgid "%1$s of %2$s image has alt text."
+msgid_plural "%1$s of %2$s images have alt text."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of images marked decorative wherever they are used
+#: includes/class-altrelay-admin.php:780
+#, php-format
+msgid "%s more image is marked decorative wherever it is used."
+msgid_plural "%s more images are marked decorative wherever they are used."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:801
+msgid "Review first"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:806
+msgid "Review first is on. AltRelay leaves every empty alt text alone, on your site and when a description changes. Go through the list below, fill what should be described and mark what is decorative, then turn this off."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:807
+msgid "Review first is off. AltRelay treats an empty alt text as \"not written yet\" and fills it from the Media Library. Turn this on if your site uses empty alt text on purpose and you want to mark those images as decorative before anything is filled."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:817
+msgid "Turn review first off"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:817
+msgid "Turn review first on"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:821
+msgid "Only an administrator can change this setting."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:840
+msgid "Images without alt text in the Media Library"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:846
+msgid "Every image has alt text or is marked decorative. Nothing to do!"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:858
+msgid "There are no images on this page. Use the pagination below to go back."
+msgstr ""
+
+#. translators: %s: maximum number of characters
+#: includes/class-altrelay-admin.php:872
+#, php-format
+msgid "Type a description and save. Every post that uses the image is updated in the background. A description can be up to %s characters long."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:878
+msgid "WordPress suggests leaving the alt text empty for a decorative image, so an empty field can mean either \"not described yet\" or \"decorative\". For a decorative image, use Mark decorative: AltRelay marks the image decorative in every post that uses it, and the image leaves this list. It returns here if it is ever given alt text."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:886
+msgid "Images in the Media Library that have no alt text."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:890
+msgid "Thumbnail"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:891
+msgid "Filename"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:892
+msgid "Used in"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:893
+msgid "Alt text"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:894
+#: includes/class-altrelay-admin.php:1251
+#: includes/class-altrelay-admin.php:1447
+msgid "Action"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:901
+#: includes/class-altrelay-admin.php:1010
+msgid "(unknown)"
+msgstr ""
+
+#. translators: %s: number of posts
+#: includes/class-altrelay-admin.php:918
+#, php-format
+msgid "%s post"
+msgid_plural "%s posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: image filename
+#: includes/class-altrelay-admin.php:928
+#, php-format
+msgid "Alt text for %s"
+msgstr ""
+
+#. translators: %s: image filename
+#: includes/class-altrelay-admin.php:940
+#, php-format
+msgid "Edit %s in the Media Library"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:941
+msgid "Edit"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:946
+#: includes/class-altrelay-admin.php:1232
+#: includes/class-altrelay-admin.php:1298
+msgid "Mark decorative"
+msgstr ""
+
+#. translators: %s: image filename. The button's name for screen readers; start it with the words of the "Mark decorative" button, so voice control finds it.
+#: includes/class-altrelay-admin.php:948
+#, php-format
+msgid "Mark decorative: %s, wherever it is used"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:957
+msgid "Save alt text"
+msgstr ""
+
+#. translators: %s: number of images
+#: includes/class-altrelay-admin.php:990
+#, php-format
+msgid "%s image has no alt text on purpose: it is marked decorative wherever it is used."
+msgid_plural "%s images have no alt text on purpose: they are marked decorative wherever they are used."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of images shown
+#: includes/class-altrelay-admin.php:1000
+#, php-format
+msgid "The %s most recent are shown."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1016
+msgid "List as missing again"
+msgstr ""
+
+#. translators: %s: image filename. The button's name for screen readers; start it with the words of the "List as missing again" button, so voice control finds it.
+#: includes/class-altrelay-admin.php:1018
+#, php-format
+msgid "List as missing again: %s"
+msgstr ""
+
+#. translators: %s: image filename
+#: includes/class-altrelay-admin.php:1057
+msgid "View the full image"
+msgstr ""
+
+#. translators: %s: image filename
+#: includes/class-altrelay-admin.php:1057
+#, php-format
+msgid "View the full image of %s"
+msgstr ""
+
+#. translators: 1: image filename, 2: number of posts
+#: includes/class-altrelay-admin.php:1076
+#, php-format
+msgid "Mark %1$s decorative in the %2$s post that uses it? Its copy gets empty alt text, and screen readers skip it."
+msgid_plural "Mark %1$s decorative in all %2$s posts that use it? Every copy gets empty alt text, and screen readers skip them."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:1100
+msgid "Being marked decorative in the background."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1105
+msgid "Not marked decorative everywhere yet:"
+msgstr ""
+
+#. translators: %s: number of posts
+#: includes/class-altrelay-admin.php:1107
+#, php-format
+msgid "Marked decorative in %s post, but not everywhere yet:"
+msgid_plural "Marked decorative in %s posts, but not everywhere yet:"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of copies
+#: includes/class-altrelay-admin.php:1115
+#, php-format
+msgid "%s copy is the only content of a link and needs alt text."
+msgid_plural "%s copies are the only content of a link and need alt text."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of posts
+#: includes/class-altrelay-admin.php:1123
+#, php-format
+msgid "%s post could not be edited by the person who asked. An editor or administrator can mark the image there."
+msgid_plural "%s posts could not be edited by the person who asked. An editor or administrator can mark the image there."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of posts
+#: includes/class-altrelay-admin.php:1131
+#, php-format
+msgid "%s post could not be saved."
+msgid_plural "%s posts could not be saved."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:1167
+msgid "View in context"
+msgstr ""
+
+#. translators: %s: post title. The link's name for screen readers; start it with the words of the "View in context" link, so voice control finds it.
+#: includes/class-altrelay-admin.php:1169
+#, php-format
+msgid "View in context: %s"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1207
+msgid "These images have a description in the Media Library, but their copy in a post has no alt text. While review first is on, AltRelay leaves them alone. Fill the ones that should be described, and mark the purely decorative ones so AltRelay keeps leaving them alone."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1208
+msgid "These images have a description in the Media Library, but their copy in a post has no alt text. AltRelay treats that as \"not written yet\": it fills these on your site and the next time the description changes. If an image is purely decorative, mark it so AltRelay leaves it alone."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1216
+#: includes/class-altrelay-cli.php:426
+msgid "No empty alt text to review."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1228
+msgid "Bulk action for selected images"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1230
+msgid "Bulk actions"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1231
+msgid "Fill from library"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1234
+msgid "Apply"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1240
+msgid "Images without alt text in posts, whose Media Library entry has alt text."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1246
+msgid "Select all"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1248
+#: includes/class-altrelay-admin.php:1444
+msgid "Image"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1249
+#: includes/class-altrelay-admin.php:1445
+msgid "Post"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1250
+#: includes/class-altrelay-admin.php:1446
+msgid "Media Library alt text"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1259
+#: includes/class-altrelay-admin.php:1454
+msgid "(no title)"
+msgstr ""
+
+#. translators: 1: image alt text, 2: post title
+#: includes/class-altrelay-admin.php:1269
+#, php-format
+msgid "Select \"%1$s\" in \"%2$s\""
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1286
+msgid "This image is the only content of a link, so its alt text names the link. It needs alt text and cannot be marked decorative."
+msgstr ""
+
+#. translators: %s: post title
+#: includes/class-altrelay-admin.php:1292
+#, php-format
+msgid "Fill alt text in \"%s\""
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1293
+msgid "Fill"
+msgstr ""
+
+#. translators: %s: post title
+#: includes/class-altrelay-admin.php:1297
+#, php-format
+msgid "Mark decorative in \"%s\""
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1308
+msgid "Review pages"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1376
+msgid "Show images in"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1378
+msgid "All content types"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1387
+msgid "Filter"
+msgstr ""
+
+#. translators: %s: number of images
+#: includes/class-altrelay-admin.php:1402
+#, php-format
+msgid "%s image on this page. More follow on the next page."
+msgid_plural "%s images on this page. More follow on the next page."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of images
+#: includes/class-altrelay-admin.php:1404
+#, php-format
+msgid "%s image on this page."
+msgid_plural "%s images on this page."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:1421
+msgid "Screen readers skip these images, and AltRelay never changes their alt text. Remove the mark if an image turned out to carry information; it then gets its Media Library description back."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1427
+#: includes/class-altrelay-cli.php:466
+msgid "No images are marked decorative."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1440
+msgid "Images marked decorative in posts."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1468
+msgid "No alt text in the Media Library yet."
+msgstr ""
+
+#. translators: %s: post title
+#: includes/class-altrelay-admin.php:1474
+#, php-format
+msgid "Remove decorative mark in \"%s\""
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1475
+msgid "Remove decorative mark"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1484
+msgid "Decorative image pages"
+msgstr ""
+
+#. translators: %s: number of posts
+#: includes/class-altrelay-admin.php:1505
+#, php-format
+msgid "Checked %s more post and found nothing to show. There are more posts to check."
+msgid_plural "Checked %s more posts and found nothing to show. There are more posts to check."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:1514
+msgid "You have reached the end of the list."
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1519
+msgid "List pages"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1544
+msgid "Back to the start"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1547
+#: includes/class-altrelay-admin.php:1599
+msgid "Next page"
+msgstr ""
+
+#: includes/class-altrelay-admin.php:1570
+msgid "Image pages"
+msgstr ""
+
+#. translators: %s: total number of pages
+#: includes/class-altrelay-admin.php:1576
+#, php-format
+msgid "%s page"
+msgid_plural "%s pages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-admin.php:1584
+msgid "Previous page"
+msgstr ""
+
+#. translators: 1: current page, 2: total pages
+#: includes/class-altrelay-admin.php:1591
+#, php-format
+msgid "%1$s of %2$s"
+msgstr ""
+
+#: includes/class-altrelay-cli.php:182
+msgid "Please provide an attachment ID, or use --all."
+msgstr ""
+
+#: includes/class-altrelay-cli.php:188
+msgid "Syncing images"
+msgstr ""
+
+#. translators: %d: post ID
+#: includes/class-altrelay-cli.php:233
+#, php-format
+msgid "Post %d is not an attachment, skipping."
+msgstr ""
+
+#. translators: %d: attachment ID
+#: includes/class-altrelay-cli.php:246
+#, php-format
+msgid "Attachment %d has no alt text, skipping. Add alt text in the Media Library first."
+msgstr ""
+
+#. translators: 1: post ID, 2: post title
+#: includes/class-altrelay-cli.php:314
+#, php-format
+msgid "Would update post %1$d (\"%2$s\")."
+msgstr ""
+
+#. translators: %d: number of posts
+#: includes/class-altrelay-cli.php:336
+#, php-format
+msgid "Dry run: %d post would be updated."
+msgid_plural "Dry run: %d posts would be updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of posts
+#: includes/class-altrelay-cli.php:341
+#, php-format
+msgid "Updated %d post."
+msgid_plural "Updated %d posts."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of posts
+#: includes/class-altrelay-cli.php:355
+#, php-format
+msgid "%d post was skipped because the --user you ran as cannot edit it."
+msgid_plural "%d posts were skipped because the --user you ran as cannot edit them."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of posts
+#: includes/class-altrelay-cli.php:370
+#: includes/class-altrelay-cli.php:709
+#, php-format
+msgid "%d post could not be saved. Run \"wp altrelay status\" for the last error."
+msgid_plural "%d posts could not be saved. Run \"wp altrelay status\" for the last error."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-cli.php:573
+#: includes/class-altrelay-cli.php:610
+msgid "Please provide a post ID and at least one attachment ID."
+msgstr ""
+
+#: includes/class-altrelay-cli.php:653
+#: includes/class-altrelay-cli.php:749
+msgid "Please provide at least one attachment ID."
+msgstr ""
+
+#. translators: %d: attachment ID
+#: includes/class-altrelay-cli.php:665
+#, php-format
+msgid "Attachment %d is not an image without alt text, skipping."
+msgstr ""
+
+#. translators: 1: attachment ID, 2: number of posts
+#: includes/class-altrelay-cli.php:679
+#, php-format
+msgid "Image %1$d: marked decorative in %2$d post, and no longer listed as missing alt text."
+msgid_plural "Image %1$d: marked decorative in %2$d posts, and no longer listed as missing alt text."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: attachment ID, 2: posts marked, 3: linked copies refused, 4: posts the user cannot edit, 5: posts that could not be saved
+#: includes/class-altrelay-cli.php:690
+#, php-format
+msgid "Image %1$d: marked decorative in %2$d post, but not everywhere. Copies that are a link's only content: %3$d. Posts you cannot edit: %4$d. Posts that could not be saved: %5$d. It stays listed as missing alt text."
+msgid_plural "Image %1$d: marked decorative in %2$d posts, but not everywhere. Copies that are a link's only content: %3$d. Posts you cannot edit: %4$d. Posts that could not be saved: %5$d. It stays listed as missing alt text."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-cli.php:716
+msgid "Done."
+msgstr ""
+
+#. translators: %d: attachment ID
+#: includes/class-altrelay-cli.php:764
+#, php-format
+msgid "Image %d was not marked decorative wherever it is used."
+msgstr ""
+
+#. translators: %d: number of images
+#: includes/class-altrelay-cli.php:773
+#, php-format
+msgid "%d image is listed as missing alt text again."
+msgid_plural "%d images are listed as missing alt text again."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of waiting updates
+#: includes/class-altrelay-cli.php:872
+#, php-format
+msgid "Action Scheduler runs AltRelay's updates on this site; %d is waiting. Run them with \"wp action-scheduler run --hooks=altrelay_process_sync\"."
+msgid_plural "Action Scheduler runs AltRelay's updates on this site; %d are waiting. Run them with \"wp action-scheduler run --hooks=altrelay_process_sync\"."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: number of jobs run, 2: number of jobs left
+#: includes/class-altrelay-cli.php:902
+#, php-format
+msgid "Ran %1$d background update; %2$d left."
+msgid_plural "Ran %1$d background updates; %2$d left."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-altrelay-cli.php:921
+msgid "Please provide a valid post ID."
+msgstr ""
+
+#. translators: %d: post ID
+#: includes/class-altrelay-cli.php:930
+#, php-format
+msgid "The --user you ran as cannot edit post %d."
+msgstr ""
+
+#. translators: %d: number of images
+#: includes/class-altrelay-cli.php:973
+#, php-format
+msgid "%d image was not marked because it is the only content of a link and needs alt text."
+msgid_plural "%d images were not marked because each is the only content of a link and needs alt text."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: post ID
+#: includes/class-altrelay-cli.php:988
+#, php-format
+msgid "Post %d could not be saved. Run \"wp altrelay status\" for the error."
+msgstr ""
+
+#: includes/class-altrelay-cli.php:996
+msgid "Nothing to change."
+msgstr ""
+
+#. translators: %d: post ID
+#: includes/class-altrelay-cli.php:1002
+#, php-format
+msgid "Filled alt text in post %d."
+msgstr ""
+
+#. translators: %d: post ID
+#: includes/class-altrelay-cli.php:1004
+#, php-format
+msgid "Marked images as decorative in post %d."
+msgstr ""
+
+#. translators: %d: post ID
+#: includes/class-altrelay-cli.php:1006
+#, php-format
+msgid "Removed the decorative mark in post %d."
+msgstr ""
+
+#. translators: %d: post ID
+#: includes/class-altrelay-cli.php:1012
+#, php-format
+msgid "Dry run: alt text would be filled in post %d."
+msgstr ""
+
+#. translators: %d: post ID
+#: includes/class-altrelay-cli.php:1014
+#, php-format
+msgid "Dry run: images would be marked as decorative in post %d."
+msgstr ""
+
+#. translators: %d: post ID
+#: includes/class-altrelay-cli.php:1016
+#, php-format
+msgid "Dry run: the decorative mark would be removed in post %d."
+msgstr ""
+
+#. translators: 1: post type, 2: comma-separated list of post types
+#: includes/class-altrelay-cli.php:1070
+#, php-format
+msgid "AltRelay does not sync the post type \"%1$s\". Available: %2$s."
+msgstr ""
+
+#. translators: %s: the invalid value
+#: includes/class-altrelay-cli.php:1101
+#, php-format
+msgid "\"%s\" is not a valid ID."
+msgstr ""
+
+#. translators: 1: attachment ID, 2: error message
+#: includes/class-altrelay-queue.php:707
+#, php-format
+msgid "The background update of image %1$d stopped: %2$s"
+msgstr ""
+
+#. translators: %d: number of tries
+#: includes/class-altrelay-queue.php:1134
+#, php-format
+msgid "the request running it ended without finishing, %d time. The server may have run out of time or memory, or hit a fatal error."
+msgid_plural "the request running it ended without finishing, %d times in a row. The server may have run out of time or memory, or hit a fatal error."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of images
+#: assets/js/editor-sync.js:1297
+#, js-format
+msgid "AltRelay filled in alt text from the Media Library for %s image."
+msgid_plural "AltRelay filled in alt text from the Media Library for %s images."
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/js/editor-sync.js:1431
+msgid "Alt text saved to the Media Library. Other posts that use the image are updated in the background."
+msgstr ""
+
+#. translators: %d: attachment ID
+#: assets/js/editor-sync.js:1449
+#, js-format
+msgid "This image's file does not belong to Media Library item %d, so its alt text was saved in this post only. Replace the image from the Media Library to connect it."
+msgstr ""
+
+#: assets/js/editor-sync.js:1471
+msgid "You cannot edit this image in the Media Library, so its new alt text was saved in this post only."
+msgstr ""
+
+#. translators: %d: attachment ID
+#: assets/js/editor-sync.js:1477
+#, js-format
+msgid "AltRelay could not update the Media Library for image %d. The alt text in this post was not saved sitewide."
+msgstr ""
+
+#: assets/js/editor-sync.js:1507
+msgid "Alt text removed from this image in this post only. The image is a link, and its alt text is what names the link for screen reader users. Add alt text again, or remove the link."
+msgstr ""
+
+#: assets/js/editor-sync.js:1521
+msgid "Alt text removed from this image in this post only. The Media Library keeps its description. If the image is purely decorative, mark it so screen readers skip it."
+msgstr ""
+
+#: assets/js/editor-sync.js:1530
+msgid "Mark as decorative"
+msgstr ""
+
+#: assets/js/editor-sync.js:1666
+msgid "Decorative image"
+msgstr ""
+
+#: assets/js/editor-sync.js:1667
+msgid "Turn on if the image adds no information. Its alt text is emptied in this post only; the Media Library keeps its description."
+msgstr ""
+
+#: assets/js/editor-sync.js:1673
+msgid "Screen readers skip this image. AltRelay will not fill or sync its alt text here."
+msgstr ""
+
+#: assets/js/editor-sync.js:1678
+msgid "Decorative image (set on a surrounding block)"
+msgstr ""
+
+#: assets/js/editor-sync.js:1679
+msgid "A block around this image carries AltRelay's decorative class, so AltRelay does not fill or sync the alt text of the images in it. Screen readers skip those whose alt text is empty. Remove the class from that block to change it."
+msgstr ""
+
+#: assets/js/editor-sync.js:1684
+msgid "Decorative image (not available for linked images)"
+msgstr ""
+
+#: assets/js/editor-sync.js:1685
+msgid "This image is a link, and its alt text is what names the link for screen reader users. Remove the link to mark the image decorative."
+msgstr ""
+
+#: assets/js/editor-sync.js:1703
+msgid "Accessibility"
+msgstr ""

@@ -1,0 +1,60 @@
+{
+  "name": "altrelay",
+  "version": "1.0.0",
+  "description": "AltRelay – Alt Text Everywhere",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:js": "jest --verbose",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:css": "stylelint \"assets/css/**/*.css\"",
+    "env:start": "npx --yes @wordpress/env@12.1.0 start",
+    "env:cli": "npx --yes @wordpress/env@12.1.0 run cli",
+    "env:stop": "npx --yes @wordpress/env@12.1.0 stop"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "assets/js/**/*.js"
+    ],
+    "coverageDirectory": "build/coverage-js",
+    "coverageThreshold": {
+      "global": {
+        "statements": 95,
+        "branches": 85,
+        "functions": 100,
+        "lines": 95
+      }
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/e2e/"
+    ]
+  },
+  "keywords": [],
+  "author": "codequelle.dev",
+  "homepage": "https://codequelle.dev/altrelay",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julianftw/altrelay.git"
+  },
+  "bugs": {
+    "url": "https://github.com/julianftw/altrelay/issues"
+  },
+  "license": "GPL-2.0-or-later",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.0",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "jest": "^30.3.0",
+    "stylelint": "^17.16.0",
+    "stylelint-config-standard": "^40.0.0"
+  }
+}

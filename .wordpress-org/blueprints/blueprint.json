@@ -1,0 +1,25 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/wp-admin/upload.php?page=altrelay",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "login": true,
+  "steps": [
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "altrelay"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nrequire_once '/wordpress/wp-load.php';\nrequire_once ABSPATH . 'wp-admin/includes/image.php';\n\n// Two demo images, drawn here so the preview needs no downloads.\n$make = static function ( string $name, array $rgb, string $alt ): int {\n\t$upload = wp_upload_dir();\n\t$file   = trailingslashit( $upload['path'] ) . $name . '.png';\n\t$image  = imagecreatetruecolor( 1200, 800 );\n\n\timagefill( $image, 0, 0, imagecolorallocate( $image, $rgb[0], $rgb[1], $rgb[2] ) );\n\timagefilledellipse( $image, 600, 400, 420, 420, imagecolorallocate( $image, 255, 255, 255 ) );\n\timagepng( $image, $file );\n\timagedestroy( $image );\n\n\t$id = wp_insert_attachment(\n\t\tarray(\n\t\t\t'post_mime_type' => 'image/png',\n\t\t\t'post_title'     => ucfirst( $name ),\n\t\t\t'post_status'    => 'inherit',\n\t\t),\n\t\t$file\n\t);\n\n\twp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $file ) );\n\n\tif ( '' !== $alt ) {\n\t\tupdate_post_meta( $id, '_wp_attachment_image_alt', $alt );\n\t}\n\n\treturn $id;\n};\n\n$described   = $make( 'lighthouse', array( 34, 113, 177 ), 'A white lighthouse against a blue sky' );\n$undescribed = $make( 'harbour', array( 0, 124, 104 ), '' );\n\n$block = static function ( int $id ): string {\n\treturn sprintf(\n\t\t\"<!-- wp:image {\\\"id\\\":%1\\$d,\\\"sizeSlug\\\":\\\"large\\\",\\\"linkDestination\\\":\\\"none\\\"} -->\\n<figure class=\\\"wp-block-image size-large\\\"><img src=\\\"%2\\$s\\\" alt=\\\"\\\" class=\\\"wp-image-%1\\$d\\\"/></figure>\\n<!-- /wp:image -->\",\n\t\t$id,\n\t\twp_get_attachment_image_url( $id, 'large' )\n\t);\n};\n\nwp_insert_post(\n\tarray(\n\t\t'post_title'   => 'A post with two images',\n\t\t'post_status'  => 'publish',\n\t\t'post_content' => \"<!-- wp:paragraph -->\\n<p>Both images were inserted without alt text. The first has a description in the Media Library, so AltRelay lists it under Media → AltRelay, in Empty alt text in your content. The second has none yet: type one on the dashboard and it appears here.</p>\\n<!-- /wp:paragraph -->\\n\\n\" . $block( $described ) . \"\\n\\n\" . $block( $undescribed ),\n\t)\n);\n"
+    }
+  ]
+}
