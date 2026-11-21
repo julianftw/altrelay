@@ -70,6 +70,8 @@ Every pull request runs, and must pass:
 
 Third-party GitHub Actions are pinned to commit SHAs. Dependabot opens weekly grouped updates for actions, Composer and npm. The PHPUnit 9.6 PHAR and the Action Scheduler release the CI jobs download are pinned by version and SHA-256 in `ci.yml`; Dependabot cannot see them, so update both values by hand when a new release is out.
 
+`package.json` pins `glob` and `minimatch` through `overrides`. Jest 30 still depends on versions with known security advisories (GHSA-3g3m-2fjr-6pw4 for `glob`, GHSA-g3hv-75wg-m249 for `minimatch`), and newer versions of both work with it. They are only used by the test tools, never shipped in the plugin. Remove the overrides once a Jest release requires the fixed versions itself; `npm audit` then still reports 0 vulnerabilities.
+
 ## Architecture
 
 ```
