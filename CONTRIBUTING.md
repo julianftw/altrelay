@@ -157,4 +157,4 @@ WordPress.org hosts plugins in Subversion. This repository stays the source of t
 2. Add the secrets `SVN_USERNAME` (your WordPress.org username) and `SVN_PASSWORD` (the SVN password generated under *Account & Security* in your WordPress.org profile, not your login password).
 3. Add the repository variable `WPORG_DEPLOY_ENABLED` with the value `true`.
 
-To update only the listing (readme, screenshots, banners) without a release, edit the files and deploy them from SVN by hand, or ship them with the next tag.
+To update only the listing without a release (screenshots, banners, icons, the blueprint, or a readme fix such as a new `Tested up to`), commit the files to `main`, then run the **WordPress.org listing** workflow (`listing.yml`) under *Actions*. It sends `readme.txt` and `.wordpress-org/` to SVN and leaves the plugin code alone. Whatever `readme.txt` says on `main` goes live, so keep the changelog for an unreleased version on a branch until its release; the workflow stops if the Stable tag names a version that has no tag yet.

@@ -1,0 +1,51 @@
+name: WordPress.org listing
+
+# Updates only the plugin's listing on WordPress.org: readme.txt and the files
+# in .wordpress-org/ (screenshots, banners, icons, the Live Preview blueprint).
+# The plugin code is not touched and no version is released. Start it by hand
+# under Actions; like the release deploy, it waits for approval in the
+# wordpress-org environment.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Third-party actions are pinned to commit SHAs; Dependabot keeps them current.
+
+jobs:
+  listing:
+    name: Update readme and assets on WordPress.org
+    runs-on: ubuntu-latest
+    if: ${{ vars.WPORG_DEPLOY_ENABLED == 'true' }}
+    environment: wordpress-org
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # The readme goes to trunk and to the tag its Stable tag names. Stop if
+      # that version has no release yet, so the listing never points at a
+      # version WordPress.org does not have.
+      - name: Check that the Stable tag is released
+        run: |
+          stable=$(grep -m 1 -E '^Stable tag:' readme.txt | awk '{print $NF}' | tr -d '\r')
+          if ! git ls-remote --exit-code --tags origin "refs/tags/v${stable}" > /dev/null; then
+            echo "::error::Stable tag ${stable} has no v${stable} release yet. Ship this readme with that release instead."
+            exit 1
+          fi
+          echo "Stable tag ${stable} is released."
+
+      - name: Update readme and assets
+        uses: 10up/action-wordpress-plugin-asset-update@2480306f6f693672726d08b5917ea114cb2825f7 # 2.2.0
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: altrelay
+          ASSETS_DIR: .wordpress-org
+          # Only readme.txt and .wordpress-org/ are sent; trunk's plugin
+          # files come from the release build and stay as they are.
+          IGNORE_OTHER_FILES: true
